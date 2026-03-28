@@ -4,6 +4,7 @@ import { RiMenuLine, RiCloseLine } from 'react-icons/ri';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { scrollToSection, scrollToTop } from '../utils/scrollTo';
+import { playClickSound } from '../utils/sounds';
 import type { NavLink } from '../types';
 
 const NAV_LINKS: NavLink[] = [
@@ -74,7 +75,7 @@ export const Navbar: React.FC = () => {
           <nav className="flex items-center justify-between h-[72px]">
             {/* Logo */}
             <button
-              onClick={scrollToTop}
+              onClick={() => { playClickSound(); scrollToTop(); }}
               className="flex items-center gap-2 group"
               aria-label="Go to top"
             >
@@ -91,7 +92,7 @@ export const Navbar: React.FC = () => {
               {NAV_LINKS.map(({ label, href }) => (
                 <li key={href}>
                   <button
-                    onClick={() => handleNav(href)}
+                    onClick={() => { playClickSound(); handleNav(href); }}
                     className={`relative px-4 py-2 text-sm font-body font-medium transition-colors duration-200 rounded-lg ${
                       activeSection === href
                         ? 'text-[var(--color-accent)]'
@@ -113,7 +114,7 @@ export const Navbar: React.FC = () => {
             {/* Right Controls */}
             <div className="flex items-center gap-2">
               <button
-                onClick={toggleDark}
+                onClick={() => { playClickSound(); toggleDark(); }}
                 className="p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)] transition-all duration-200"
                 aria-label="Toggle dark mode"
               >

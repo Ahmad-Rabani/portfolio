@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { playClickSound, playSuccessSound } from '../utils/sounds';
 import {
   RiMailLine,
   RiLinkedinBoxLine,
@@ -58,8 +59,12 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
+    if (!form.name || !form.email || !form.message) {
+      playClickSound(0.1); // Subtle click on validation failure
+      return;
+    }
 
+    playClickSound(); // Click sound for submission
     setLoading(true);
     setError(null);
 
@@ -72,6 +77,7 @@ export const Contact: React.FC = () => {
         to_email: 'ahmadalirabani07@gmail.com',
       });
 
+      playSuccessSound(); // Success sound
       setSubmitted(true);
       setForm(INITIAL_FORM);
     } catch (err) {
@@ -132,7 +138,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <h3 className="font-display text-2xl font-bold text-[var(--color-text)] mb-2">
                   Message sent!
-                </h3>
+                </h3>playClickSound(); 
                 <p className="body-text text-sm">
                   Thanks for reaching out. I'll get back to you within 24 hours.
                 </p>

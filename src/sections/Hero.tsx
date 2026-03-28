@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { RiArrowDownLine, RiDownload2Line } from 'react-icons/ri';
 import { scrollToSection } from '../utils/scrollTo';
+import { playClickSound } from '../utils/sounds';
 
 const fadeUp = (delay: number = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -67,16 +68,17 @@ export const Hero: React.FC = () => {
 
             {/* CTA Buttons */}
             <motion.div {...fadeUp(0.45)} className="flex flex-wrap gap-3 mb-10">
-              <button onClick={() => scrollToSection('projects')} className="btn-primary">
+              <button onClick={() => { playClickSound(); scrollToSection('projects'); }} className="btn-primary">
                 View My Work
                 <RiArrowDownLine size={16} />
               </button>
-              <button onClick={() => scrollToSection('contact')} className="btn-outline">
+              <button onClick={() => { playClickSound(); scrollToSection('contact'); }} className="btn-outline">
                 Contact Me
               </button>
               <a
                 href="/cv/Ahmad Ali Rabani (1) 1 (1).pdf"
                 download
+                onClick={() => playClickSound()}
                 className="inline-flex items-center gap-2 text-sm font-body font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors py-3 px-2"
               >
                 <RiDownload2Line size={16} />
@@ -158,7 +160,7 @@ export const Hero: React.FC = () => {
           className="flex justify-center pb-8"
         >
           <button
-            onClick={() => scrollToSection('about')}
+            onClick={() => { playClickSound(); scrollToSection('about'); }}
             className="flex flex-col items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors group"
           >
             <span className="text-xs font-body uppercase tracking-widest">Scroll down</span>
