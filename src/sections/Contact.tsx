@@ -138,7 +138,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <h3 className="font-display text-2xl font-bold text-[var(--color-text)] mb-2">
                   Message sent!
-                </h3>playClickSound(); 
+                </h3> 
                 <p className="body-text text-sm">
                   Thanks for reaching out. I'll get back to you within 24 hours.
                 </p>
