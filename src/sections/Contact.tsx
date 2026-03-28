@@ -48,7 +48,7 @@ export const Contact: React.FC = () => {
 
   useEffect(() => {
     // Initialize EmailJS with your public key
-    emailjs.init('mClvHJ9U4ylXN8FyT');
+    emailjs.init('sYSu9gyu92sxADt1-');
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -64,7 +64,7 @@ export const Contact: React.FC = () => {
     setError(null);
 
     try {
-      await emailjs.send('service_r4p6v7k', 'template_8h5p9m2', {
+      await emailjs.send('service_8sjwbyt', 'template_g3wuuds', {
         from_name: form.name,
         from_email: form.email,
         subject: form.subject || 'Portfolio Contact',
@@ -174,13 +174,7 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                  <lab
-
-                {error && (
-                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                    <p className="text-sm font-body text-red-500">{error}</p>
-                  </div>
-                )}el className="block text-xs font-body font-medium text-[var(--color-text)] mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-body font-medium text-[var(--color-text)] mb-1.5 uppercase tracking-wider">
                     Subject
                   </label>
                   <input
@@ -205,6 +199,12 @@ export const Contact: React.FC = () => {
                     className={`${inputClass} resize-none`}
                   />
                 </div>
+
+                {error && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                    <p className="text-sm font-body text-red-500">{error}</p>
+                  </div>
+                )}
 
                 <button
                   onClick={handleSubmit}
