@@ -64,7 +64,7 @@ export const Contact: React.FC = () => {
     setError(null);
 
     try {
-      await emailjs.send('service_8sjwbyt', 'template_g3wuuds', {
+      await emailjs.send('service_rtcyc6b', 'template_g3wuuds', {
         from_name: form.name,
         from_email: form.email,
         subject: form.subject || 'Portfolio Contact',
