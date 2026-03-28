@@ -45,15 +45,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
               <RiExternalLinkLine size={14} />
             </a>
           )}
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-charcoal-900 hover:bg-[var(--color-accent)] transition-colors"
-            aria-label={`View ${project.title} on GitHub`}
-          >
-            <RiGithubLine size={14} />
-          </a>
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-charcoal-900 hover:bg-[var(--color-accent)] transition-colors"
+              aria-label={`View ${project.title} on GitHub`}
+            >
+              <RiGithubLine size={14} />
+            </a>
+          )}
         </div>
       </div>
 
@@ -98,20 +100,22 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary text-xs px-4 py-2.5 flex-1 justify-center"
+              className={`btn-primary text-xs px-4 py-2.5 justify-center ${project.githubUrl ? '' : 'flex-1'}`}
             >
               Live Demo <RiExternalLinkLine size={13} />
             </a>
           )}
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`btn-outline text-xs px-4 py-2.5 ${project.liveUrl === '#' ? 'flex-1 justify-center' : ''}`}
-          >
-            <RiGithubLine size={14} /> Code
-          </a>
-          {project.liveUrl === '#' && (
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn-outline text-xs px-4 py-2.5 ${project.liveUrl === '#' ? 'flex-1 justify-center' : ''}`}
+            >
+              <RiGithubLine size={14} /> Code
+            </a>
+          )}
+          {project.liveUrl === '#' && !project.githubUrl && (
             <button className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors font-body font-medium">
               Details <RiArrowRightLine size={14} />
             </button>

@@ -7,7 +7,7 @@ export interface Project {
   tech: string[];
   image: string;
   liveUrl: string;
-  githubUrl: string;
+  githubUrl?: string;
   featured?: boolean;
 }
 
