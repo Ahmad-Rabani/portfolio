@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import {
   RiMailLine,
   RiLinkedinBoxLine,
@@ -43,18 +44,42 @@ export const Contact: React.FC = () => {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init('mClvHJ9U4ylXN8FyT');
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setError(null);
   };
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
+
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    setError(null);
+
+    try {
+      await emailjs.send('service_r4p6v7k', 'template_8h5p9m2', {
+        from_name: form.name,
+        from_email: form.email,
+        subject: form.subject || 'Portfolio Contact',
+        message: form.message,
+        to_email: 'ahmadalirabani07@gmail.com',
+      });
+
+      setSubmitted(true);
+      setForm(INITIAL_FORM);
+    } catch (err) {
+      setError('Failed to send message. Please try again or email me directly.');
+      console.error('EmailJS error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -149,7 +174,13 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-body font-medium text-[var(--color-text)] mb-1.5 uppercase tracking-wider">
+                  <lab
+
+                {error && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                    <p className="text-sm font-body text-red-500">{error}</p>
+                  </div>
+                )}el className="block text-xs font-body font-medium text-[var(--color-text)] mb-1.5 uppercase tracking-wider">
                     Subject
                   </label>
                   <input
