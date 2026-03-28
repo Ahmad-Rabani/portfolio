@@ -21,20 +21,20 @@ const INITIAL_FORM: FormState = { name: '', email: '', subject: '', message: '' 
 const CONTACT_LINKS = [
   {
     label: 'Email',
-    value: 'alex@example.com',
-    href: 'mailto:alex@example.com',
+    value: 'ahmadalirabani07@gmail.com',
+    href: 'mailto:ahmadalirabani07@gmail.com',
     icon: <RiMailLine size={20} />,
   },
   {
     label: 'LinkedIn',
-    value: 'linkedin.com/in/alex',
-    href: 'https://linkedin.com',
+    value: 'linkedin.com/in/ahmad-ali-rabani',
+    href: 'https://www.linkedin.com/in/ahmad-ali-rabani-879a12256/',
     icon: <RiLinkedinBoxLine size={20} />,
   },
   {
     label: 'GitHub',
-    value: 'github.com/alex',
-    href: 'https://github.com',
+    value: 'github.com/Ahmad-Rabani',
+    href: 'https://github.com/Ahmad-Rabani',
     icon: <RiGithubLine size={20} />,
   },
 ];
@@ -129,7 +129,7 @@ export const Contact: React.FC = () => {
                       name="name"
                       value={form.name}
                       onChange={handleChange}
-                      placeholder="Alex Johnson"
+                      placeholder="Ahmad Ali Rabani"
                       className={inputClass}
                     />
                   </div>

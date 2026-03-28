@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { RiGithubLine, RiLinkedinBoxLine, RiTwitterXLine, RiHeartFill } from 'react-icons/ri';
+import { RiGithubLine, RiLinkedinBoxLine, RiHeartFill } from 'react-icons/ri';
 import { scrollToSection, scrollToTop } from '../utils/scrollTo';
 
 const NAV_LINKS = [
@@ -11,9 +11,8 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL = [
-  { icon: <RiGithubLine size={18} />, href: 'https://github.com', label: 'GitHub' },
-  { icon: <RiLinkedinBoxLine size={18} />, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: <RiTwitterXLine size={18} />, href: 'https://twitter.com', label: 'Twitter' },
+  { icon: <RiGithubLine size={18} />, href: 'https://github.com/Ahmad-Rabani', label: 'GitHub' },
+  { icon: <RiLinkedinBoxLine size={18} />, href: 'https://www.linkedin.com/in/ahmad-ali-rabani-879a12256/', label: 'LinkedIn' },
 ];
 
 export const Footer: React.FC = () => {
@@ -25,10 +24,10 @@ export const Footer: React.FC = () => {
           <div>
             <button onClick={scrollToTop} className="flex items-center gap-2 mb-3 group">
               <div className="w-7 h-7 bg-[var(--color-accent)] rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                <span className="font-display font-bold text-charcoal-900 text-xs">A</span>
+                <span className="font-display font-bold text-charcoal-900 text-xs">R</span>
               </div>
               <span className="font-display font-bold text-[var(--color-text)] text-base">
-                Alex<span className="text-[var(--color-accent)]">.</span>
+                Rabani<span className="text-[var(--color-accent)]">.</span>
               </span>
             </button>
             <p className="font-body text-sm text-[var(--color-text-muted)] leading-relaxed max-w-[220px]">
@@ -92,7 +91,7 @@ export const Footer: React.FC = () => {
         {/* Bottom bar */}
         <div className="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-body text-xs text-[var(--color-text-muted)]">
-            © {new Date().getFullYear()} Alex Johnson. All rights reserved.
+            © {new Date().getFullYear()} Ahmad Ali Rabani. All rights reserved.
           </p>
           <p className="font-body text-xs text-[var(--color-text-muted)] flex items-center gap-1.5">
             Built with{' '}

@@ -9,9 +9,9 @@ const fadeUp = (delay: number = 0) => ({
 });
 
 const SOCIAL_LINKS = [
-  { label: 'GitHub', href: 'https://github.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
-  { label: 'Twitter', href: 'https://twitter.com' },
+  { label: 'GitHub', href: 'https://github.com/Ahmad-Rabani' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmad-ali-rabani-879a12256/' },
+  // { label: 'Twitter', href: 'https://twitter.com' },
 ];
 
 export const Hero: React.FC = () => {
@@ -75,7 +75,8 @@ export const Hero: React.FC = () => {
                 Contact Me
               </button>
               <a
-                href="#"
+                href="/cv/Ahmad Ali Rabani (1) 1 (1).pdf"
+                download
                 className="inline-flex items-center gap-2 text-sm font-body font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors py-3 px-2"
               >
                 <RiDownload2Line size={16} />
@@ -116,24 +117,12 @@ export const Hero: React.FC = () => {
 
               {/* Avatar container */}
               <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--color-bg)] shadow-2xl">
-                {/* Placeholder gradient avatar */}
-                <div className="w-full h-full bg-gradient-to-br from-[var(--color-accent)]/20 to-[var(--color-accent)]/5 flex items-center justify-center">
-                  <svg viewBox="0 0 200 200" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#E8A435" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#E8A435" stopOpacity="0.05" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="100" cy="100" r="100" fill="url(#avatarGrad)" />
-                    {/* Stylized person silhouette */}
-                    <circle cx="100" cy="72" r="32" fill="#E8A435" opacity="0.6" />
-                    <ellipse cx="100" cy="155" rx="52" ry="45" fill="#E8A435" opacity="0.4" />
-                    {/* Code brackets decoration */}
-                    <text x="30" y="110" fontFamily="monospace" fontSize="28" fill="#E8A435" opacity="0.5">{'{'}</text>
-                    <text x="148" y="110" fontFamily="monospace" fontSize="28" fill="#E8A435" opacity="0.5">{'}'}</text>
-                  </svg>
-                </div>
+                <img
+                  src="/Hero/hero.png"
+                  alt="Hero Portrait"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: '85% 50%' }}
+                />
               </div>
 
               {/* Floating badge — experience */}

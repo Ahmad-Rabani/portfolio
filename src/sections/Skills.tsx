@@ -13,7 +13,7 @@ import {
   RiTerminalBoxLine,
   RiGlobalLine,
 } from 'react-icons/ri';
-import { SiTypescript, SiTailwindcss, SiVite, SiNextdotjs, SiFigma } from 'react-icons/si';
+import { SiTypescript, SiTailwindcss, SiVite, SiNextdotjs, SiFigma, SiAntdesign, SiMui, SiStyledcomponents, SiBitbucket } from 'react-icons/si';
 
 interface SkillItem {
   name: string;
@@ -37,31 +37,38 @@ const SKILL_GROUPS: SkillGroup[] = [
       { name: 'JavaScript', icon: <RiJavascriptLine size={22} />, level: 5 },
       { name: 'HTML5', icon: <RiHtml5Line size={22} />, level: 5 },
       { name: 'CSS3', icon: <RiCss3Line size={22} />, level: 5 },
-      { name: 'Tailwind CSS', icon: <SiTailwindcss size={18} />, level: 4 },
-      { name: 'Next.js', icon: <SiNextdotjs size={18} />, level: 3 },
+      { name: 'Next.js', icon: <SiNextdotjs size={18} />, level: 4 },
       { name: 'Vite', icon: <SiVite size={18} />, level: 4 },
     ],
   },
   {
-    category: 'UI/UX & Design',
-    description: 'Bringing craft and intentionality to every interface',
+    category: 'Styling & State Management',
+    description: 'Tools for beautiful UIs and predictable state handling',
     skills: [
-      { name: 'Responsive Design', icon: <RiSmartphoneLine size={22} />, level: 5 },
-      { name: 'Accessibility', icon: <RiContrastLine size={22} />, level: 4 },
-      { name: 'Component Design', icon: <RiAppsLine size={22} />, level: 5 },
-      { name: 'Figma', icon: <SiFigma size={18} />, level: 3 },
-      { name: 'Animation', icon: <RiLayout2Line size={22} />, level: 4 },
-      { name: 'Design Systems', icon: <RiCodeSSlashLine size={22} />, level: 4 },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss size={18} />, level: 5 },
+      { name: 'Bootstrap', icon: <RiLayout2Line size={22} />, level: 4 },
+      { name: 'Styled Components', icon: <SiStyledcomponents size={18} />, level: 4 },
+      { name: 'Redux', icon: <RiCodeSSlashLine size={22} />, level: 4 },
+      { name: 'Context API', icon: <RiAppsLine size={22} />, level: 5 },
     ],
   },
   {
-    category: 'Tools & Workflow',
-    description: 'The ecosystem that keeps my work efficient and reliable',
+    category: 'Component Libraries',
+    description: 'UI frameworks for building polished interfaces',
+    skills: [
+      { name: 'Ant Design', icon: <SiAntdesign size={18} />, level: 5 },
+      { name: 'Material-UI (MUI)', icon: <SiMui size={18} />, level: 4 },
+    ],
+  },
+  {
+    category: 'Tools & Services',
+    description: 'Development workflow and backend integration',
     skills: [
       { name: 'Git & GitHub', icon: <RiGitBranchLine size={22} />, level: 5 },
-      { name: 'REST APIs', icon: <RiGlobalLine size={22} />, level: 4 },
-      { name: 'CLI & Terminal', icon: <RiTerminalBoxLine size={22} />, level: 4 },
-      { name: 'npm / yarn', icon: <RiCodeSSlashLine size={22} />, level: 5 },
+      { name: 'REST APIs', icon: <RiGlobalLine size={22} />, level: 5 },
+      { name: 'Bitbucket', icon: <SiBitbucket size={18} />, level: 3 },
+      { name: 'Azure', icon: <RiTerminalBoxLine size={22} />, level: 3 },
+      { name: 'Firebase', icon: <RiSmartphoneLine size={22} />, level: 3 },
     ],
   },
 ];

@@ -1,47 +1,50 @@
 import { motion } from 'framer-motion';
-import { RiMapPinLine, RiCalendarLine, RiCheckDoubleLine } from 'react-icons/ri';
+import { RiMapPinLine, RiCalendarLine, RiCheckDoubleLine, RiDownload2Line } from 'react-icons/ri';
 import type { Experience as ExperienceItem } from '../types';
 
 const EXPERIENCES: ExperienceItem[] = [
   {
     id: 1,
-    role: 'Frontend Developer',
-    company: 'TechVentures Studio',
-    period: 'Jan 2024 – Present',
-    location: 'Remote',
+    role: 'React Developer',
+    company: 'En Route Technologies',
+    period: 'Jun 2024 – Present',
+    location: 'Onsite',
     current: true,
     achievements: [
-      'Led the rewrite of the core product dashboard from Vue to React, reducing bundle size by 35% and cutting time-to-interactive from 4.2s to 1.8s',
-      'Built a reusable component library (32 components) now used across 4 internal products, saving ~200 hours of dev work per quarter',
-      'Improved mobile experience through a full responsive audit, increasing mobile session duration by 22%',
-      'Mentored 2 junior developers through code reviews and pair programming sessions',
+      'Developing Garage Management System (GMS) with multi-module architecture for vehicle intake, inspections, and invoicing',
+      'Built vehicle-first search flow with debounced API calls and multi-step wizard UX with conditional step skipping',
+      'Implemented SVG-based vehicle damage marking system with coordinate capture for inspection module',
+      'Designed comprehensive invoice and feedback modules with star ratings and public API integration for customer reviews',
+      'Integrated multi-language support and privilege-based menu controls across application modules',
+      'Managed messages and notes functionality with cartId-based conditional API logic and safe conditional rendering',
     ],
   },
   {
     id: 2,
-    role: 'Junior Frontend Developer',
-    company: 'BrightPixel Agency',
-    period: 'Jun 2022 – Dec 2023',
-    location: 'Hybrid — London, UK',
+    role: 'React Developer',
+    company: 'Precise Tech',
+    period: 'Jan 2024 – Jun 2024',
+    location: 'Remote',
     current: false,
     achievements: [
-      'Delivered 8 client websites on time, including a high-traffic e-commerce site serving 50k+ monthly visitors',
-      'Introduced Tailwind CSS to the agency workflow, reducing average styling time per feature by ~30%',
-      'Fixed 40+ accessibility issues across client projects, helping 2 clients pass WCAG 2.1 AA audits',
-      'Integrated third-party APIs (Stripe, Mailchimp, Google Maps) across multiple client projects',
+      'Collaborated in developing and maintaining responsive web applications using React.js with focus on performance and scalability',
+      'Implemented reusable, modular UI components adhering to best practices and design standards',
+      'Worked with cross-functional teams to deliver features, debug issues, and optimize application performance',
+      'Gained hands-on experience with state management libraries, API integration, and modern tools like Next.js',
     ],
   },
   {
     id: 3,
-    role: 'Freelance Web Developer',
-    company: 'Self-employed',
-    period: 'Jan 2022 – May 2022',
-    location: 'Remote',
+    role: 'React Developer',
+    company: 'Elitx Technologies',
+    period: 'Aug 2023 – Jan 2024',
+    location: 'Onsite',
     current: false,
     achievements: [
-      'Built and launched 5 portfolio and business websites for independent clients',
-      'Designed and developed a custom booking system for a local service business, replacing manual email scheduling',
-      'Maintained 100% client satisfaction rating across all engagements',
+      'Completed internship that transitioned into a full-time role, gaining foundational experience in software development',
+      'Worked on front-end development projects using React, JavaScript, TypeScript, and Next.js',
+      'Designed and executed user interfaces, improving application performance and user experience',
+      'Collaborated with dynamic teams to develop and maintain scalable web applications using modern technologies',
     ],
   },
 ];
@@ -158,23 +161,58 @@ export const Experience: React.FC = () => {
           </div>
         </div>
 
-        {/* Education note */}
+        {/* Education Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-12 card-base p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          className="mt-16"
         >
-          <div>
-            <p className="font-body font-semibold text-sm text-[var(--color-text)] mb-1">
-              BSc Computer Science
-            </p>
-            <p className="font-body text-xs text-[var(--color-text-muted)]">
-              University of Manchester · 2018 – 2022 · First Class Honours
-            </p>
+          <div className="mb-8">
+            <span className="label-text">Education</span>
+            <div className="divider-line my-3" />
+            <h3 className="section-heading">
+              Academic{' '}
+              <span className="font-display italic font-normal text-[var(--color-text-muted)]">
+                background
+              </span>
+            </h3>
           </div>
-          <a href="#" className="btn-outline text-xs px-5 py-2.5 whitespace-nowrap">
+
+          <div className="space-y-4">
+            <div className="card-base p-6">
+              <p className="font-body font-semibold text-sm text-[var(--color-text)] mb-1">
+                Bachelor of Science in Computer Science
+              </p>
+              <p className="font-body text-xs text-[var(--color-text-muted)]">
+                Islamia University Peshawar
+              </p>
+            </div>
+            <div className="card-base p-6">
+              <p className="font-body font-semibold text-sm text-[var(--color-text)] mb-1">
+                F.sc. (2 year)
+              </p>
+              <p className="font-body text-xs text-[var(--color-text-muted)]">
+                Paradise Children Colleges, Hangu
+              </p>
+            </div>
+            <div className="card-base p-6">
+              <p className="font-body font-semibold text-sm text-[var(--color-text)] mb-1">
+                Matric (2 year)
+              </p>
+              <p className="font-body text-xs text-[var(--color-text-muted)]">
+                Paradise Children Colleges, Hangu
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="/cv/Ahmad Ali Rabani (1) 1 (1).pdf"
+            download
+            className="inline-flex items-center gap-2 text-sm font-body font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors py-3 px-2 mt-6"
+          >
+            <RiDownload2Line size={16} />
             Download CV
           </a>
         </motion.div>

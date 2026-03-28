@@ -79,10 +79,10 @@ export const Navbar: React.FC = () => {
               aria-label="Go to top"
             >
               <div className="w-8 h-8 bg-[var(--color-accent)] rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                <span className="font-display font-bold text-charcoal-900 text-sm leading-none">A</span>
+                <span className="font-display font-bold text-charcoal-900 text-sm leading-none">R</span>
               </div>
               <span className="font-display font-bold text-[var(--color-text)] text-lg hidden sm:block">
-                Alex<span className="text-[var(--color-accent)]">.</span>
+                Rabani<span className="text-[var(--color-accent)]">.</span>
               </span>
             </button>
 

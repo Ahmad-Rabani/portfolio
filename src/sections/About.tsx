@@ -35,7 +35,7 @@ export const About: React.FC = () => {
                     </div>
                     <div className="text-[var(--color-text-muted)] space-y-1">
                       <div><span className="text-blue-400">const</span> <span className="text-[var(--color-accent)]">developer</span> = {'{'}</div>
-                      <div className="pl-4"><span className="text-green-400">name</span>: <span className="text-orange-400">"Alex Johnson"</span>,</div>
+                      <div className="pl-4"><span className="text-green-400">name</span>: <span className="text-orange-400">"Ahmad Ali Rabani"</span>,</div>
                       <div className="pl-4"><span className="text-green-400">role</span>: <span className="text-orange-400">"Frontend Dev"</span>,</div>
                       <div className="pl-4"><span className="text-green-400">passion</span>: <span className="text-orange-400">"Great UX"</span>,</div>
                       <div className="pl-4"><span className="text-green-400">coffee</span>: <span className="text-purple-400">true</span>,</div>
@@ -84,7 +84,7 @@ export const About: React.FC = () => {
             </h2>
 
             <p className="body-text mb-4">
-              Hi, I'm <strong className="text-[var(--color-text)] font-semibold">Alex Johnson</strong> — a
+              Hi, I'm <strong className="text-[var(--color-text)] font-semibold">Ahmad Ali Rabani</strong> — a
               frontend developer who genuinely cares about the people using the products I build. I believe
               the best software is the kind that gets out of the way and just works.
             </p>
