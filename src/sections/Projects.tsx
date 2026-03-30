@@ -86,6 +86,28 @@ const PROJECTS: Project[] = [
     githubUrl: 'https://github.com/Ahmad-Rabani/Notes-React',
     featured: false,
   },
+  {
+    id: 8,
+    title: 'Garage CMS',
+    description: 'A comprehensive content management system for garage operations, enabling administrators to manage services, pricing, inventory, and customer data from a centralized dashboard.',
+    problem: 'Garage managers needed an intuitive admin interface to manage business operations and content efficiently.',
+    impact: 'Streamlined administrative workflows and reduced management overhead for garage operations.',
+    tech: ['React', 'TypeScript', 'Ant Design'],
+    image: '/project%20images/CMS.png',
+    liveUrl: 'http://dev2.sianty.com',
+    featured: false,
+  },
+  {
+    id: 9,
+    title: 'Garage Customer App',
+    description: 'A customer-facing mobile web application for garage services, allowing customers to book appointments, track service status, and manage their vehicle records.',
+    problem: 'Customers needed a convenient way to book services and track their garage work without phone calls.',
+    impact: 'Increased customer engagement and improved service booking efficiency through self-service platform.',
+    tech: ['React', 'TypeScript', 'Ant Design'],
+    image: '/project%20images/Customer.png',
+    liveUrl: 'http://158.180.46.230:3006/login',
+    featured: false,
+  },
 ];
 
 const FILTERS = ['All', 'Featured', 'React', 'Ant Design', 'Tailwind CSS'] as const;
