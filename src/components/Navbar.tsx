@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RiMenuLine, RiCloseLine } from 'react-icons/ri';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { useScrollSpy } from '../hooks/useScrollSpy';
+import { AppearanceSettings } from './AppearanceSettings';
 import { scrollToSection, scrollToTop } from '../utils/scrollTo';
 import { playClickSound } from '../utils/sounds';
 import type { NavLink } from '../types';
@@ -113,6 +114,8 @@ export const Navbar: React.FC = () => {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2">
+              <AppearanceSettings />
+
               <button
                 onClick={() => { playClickSound(); toggleDark(); }}
                 className="p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)] transition-all duration-200"
