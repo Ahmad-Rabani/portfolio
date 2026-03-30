@@ -9,6 +9,7 @@ export interface Project {
   liveUrl: string;
   githubUrl?: string;
   featured?: boolean;
+  category?: string;
 }
 
 export interface Skill {

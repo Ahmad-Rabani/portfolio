@@ -14,6 +14,31 @@ const PROJECTS: Project[] = [
     image: '/project%20images/sianty.png',
     liveUrl: 'http://dev1.sianty.com/#/login',
     featured: true,
+    category: 'Sianty',
+  },
+  {
+    id: 8,
+    title: 'Garage CMS',
+    description: 'A comprehensive content management system for garage operations, enabling administrators to manage services, pricing, inventory, and customer data from a centralized dashboard.',
+    problem: 'Garage managers needed an intuitive admin interface to manage business operations and content efficiently.',
+    impact: 'Streamlined administrative workflows and reduced management overhead for garage operations.',
+    tech: ['React', 'TypeScript', 'Ant Design'],
+    image: '/project%20images/CMS.png',
+    liveUrl: 'http://dev2.sianty.com',
+    featured: true,
+    category: 'Sianty',
+  },
+  {
+    id: 9,
+    title: 'Garage Customer App',
+    description: 'A customer-facing mobile web application for garage services, allowing customers to book appointments, track service status, and manage their vehicle records.',
+    problem: 'Customers needed a convenient way to book services and track their garage work without phone calls.',
+    impact: 'Increased customer engagement and improved service booking efficiency through self-service platform.',
+    tech: ['React', 'TypeScript', 'Ant Design'],
+    image: '/project%20images/Customer.png',
+    liveUrl: 'http://158.180.46.230:3006/login',
+    featured: true,
+    category: 'Sianty',
   },
   {
     id: 2,
@@ -86,31 +111,9 @@ const PROJECTS: Project[] = [
     githubUrl: 'https://github.com/Ahmad-Rabani/Notes-React',
     featured: false,
   },
-  {
-    id: 8,
-    title: 'Garage CMS',
-    description: 'A comprehensive content management system for garage operations, enabling administrators to manage services, pricing, inventory, and customer data from a centralized dashboard.',
-    problem: 'Garage managers needed an intuitive admin interface to manage business operations and content efficiently.',
-    impact: 'Streamlined administrative workflows and reduced management overhead for garage operations.',
-    tech: ['React', 'TypeScript', 'Ant Design'],
-    image: '/project%20images/CMS.png',
-    liveUrl: 'http://dev2.sianty.com',
-    featured: false,
-  },
-  {
-    id: 9,
-    title: 'Garage Customer App',
-    description: 'A customer-facing mobile web application for garage services, allowing customers to book appointments, track service status, and manage their vehicle records.',
-    problem: 'Customers needed a convenient way to book services and track their garage work without phone calls.',
-    impact: 'Increased customer engagement and improved service booking efficiency through self-service platform.',
-    tech: ['React', 'TypeScript', 'Ant Design'],
-    image: '/project%20images/Customer.png',
-    liveUrl: 'http://158.180.46.230:3006/login',
-    featured: false,
-  },
 ];
 
-const FILTERS = ['All', 'Featured', 'React', 'Ant Design', 'Tailwind CSS'] as const;
+const FILTERS = ['All', 'Featured', 'Sianty', 'React', 'Ant Design', 'Tailwind CSS'] as const;
 type Filter = (typeof FILTERS)[number];
 
 export const Projects: React.FC = () => {
@@ -119,6 +122,7 @@ export const Projects: React.FC = () => {
   const filtered = PROJECTS.filter((p) => {
     if (active === 'All') return true;
     if (active === 'Featured') return p.featured;
+    if (active === 'Sianty') return p.category === 'Sianty';
     return p.tech.some((t) => t === active);
   });
 
