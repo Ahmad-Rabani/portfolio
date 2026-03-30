@@ -88,14 +88,14 @@
     @apply inline-flex items-center gap-2 bg-[var(--color-accent)] text-charcoal-900 font-body font-semibold
            px-6 py-3 rounded-full text-sm tracking-wide
            hover:bg-amber-light active:scale-95
-           transition-all duration-200 cursor-pointer;
+           transition-all duration-200;
   }
 
   .btn-outline {
     @apply inline-flex items-center gap-2 border-2 border-[var(--color-text)] text-[var(--color-text)] font-body font-semibold
            px-6 py-3 rounded-full text-sm tracking-wide
            hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] active:scale-95
-           transition-all duration-200 cursor-pointer;
+           transition-all duration-200;
   }
 
   .divider-line {
@@ -116,6 +116,18 @@
 @layer utilities {
   .font-600 {
     font-weight: 600;
+  }
+
+  /* Hide default cursor on interactive elements - show only custom cursor */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  select,
+  textarea,
+  .cursor-pointer {
+    cursor: none !important;
   }
 
   /* Custom scrollbar */

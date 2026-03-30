@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const CURSOR_SIZE = 30;
+const CURSOR_SIZE = 20;
 const CURSOR_BORDER_SIZE = 2;
 
 export const CustomCursor: React.FC = () => {
@@ -120,8 +120,8 @@ export const CustomCursor: React.FC = () => {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-200"
         style={{
-          width: isHovering ? 6 : 4,
-          height: isHovering ? 6 : 4,
+          width: isHovering ? 4 : 3,
+          height: isHovering ? 4 : 3,
           backgroundColor: isHovering ? 'var(--color-accent)' : 'var(--color-text)',
           opacity: isHovering ? 1 : 0.8,
         }}
