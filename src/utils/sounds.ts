@@ -3,53 +3,79 @@
  * Generates a subtle, minimal click sound using Web Audio API
  */
 
-const audioContext = typeof window !== 'undefined' 
-  ? new (window.AudioContext || (window as any).webkitAudioContext)()
-  : null;
+type WebkitWindow = Window & typeof globalThis & {
+  webkitAudioContext?: typeof AudioContext;
+};
+
+let audioContext: AudioContext | null = null;
+
+const getAudioContext = (): AudioContext | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  if (audioContext) {
+    return audioContext;
+  }
+
+  const AudioContextClass = window.AudioContext || (window as WebkitWindow).webkitAudioContext;
+  if (!AudioContextClass) {
+    return null;
+  }
+
+  audioContext = new AudioContextClass();
+  return audioContext;
+};
+
+const runWhenAudioReady = (callback: (ctx: AudioContext) => void): void => {
+  const ctx = getAudioContext();
+  if (!ctx || ctx.state === 'closed' || ctx.state === 'interrupted') {
+    return;
+  }
+
+  if (ctx.state === 'suspended') {
+    void ctx.resume().then(() => callback(ctx)).catch(() => undefined);
+    return;
+  }
+
+  callback(ctx);
+};
+
+export const primeClickSound = (): void => {
+  const ctx = getAudioContext();
+  if (!ctx || ctx.state !== 'suspended') {
+    return;
+  }
+
+  void ctx.resume().catch(() => undefined);
+};
 
 /**
  * Play a professional UI click sound
  * Duration: 80ms, clean digital tone, minimal volume
  */
 export const playClickSound = (volume: number = 0.15): void => {
-  if (!audioContext || audioContext.state === 'interrupted') return;
+  runWhenAudioReady((ctx) => {
+    const now = ctx.currentTime + 0.001;
+    const duration = 0.05;
 
-  try {
-    const now = audioContext.currentTime;
-    const duration = 0.08; // 80ms
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
 
-    // Create oscillator for the click tone
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // Create a biquad filter for a subtle high-pass effect
-    const filter = audioContext.createBiquadFilter();
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(760, now);
+    oscillator.frequency.exponentialRampToValueAtTime(260, now + duration);
 
-    // Configure oscillator - start high and drop quickly for a "tap" effect
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(800, now);
-    oscillator.frequency.exponentialRampToValueAtTime(200, now + duration);
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.exponentialRampToValueAtTime(Math.max(volume, 0.001), now + 0.004);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-    // Configure filter
-    filter.type = 'highpass';
-    filter.frequency.setValueAtTime(2000, now);
+    oscillator.connect(gainNode);
+    gainNode.connect(ctx.destination);
 
-    // Configure gain - quick attack, quick decay
-    gainNode.gain.setValueAtTime(0, now);
-    gainNode.gain.linearRampToValueAtTime(volume, now + 0.005); // 5ms attack
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration); // decay
-
-    // Connect nodes
-    oscillator.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    // Play sound
     oscillator.start(now);
     oscillator.stop(now + duration);
-  } catch (error) {
-    console.error('Error playing click sound:', error);
-  }
+  });
 };
 
 /**
@@ -57,35 +83,26 @@ export const playClickSound = (volume: number = 0.15): void => {
  * Used for form submission success
  */
 export const playSuccessSound = (volume: number = 0.12): void => {
-  if (!audioContext || audioContext.state === 'interrupted') return;
+  runWhenAudioReady((ctx) => {
+    const now = ctx.currentTime + 0.001;
+    const duration = 0.11;
 
-  try {
-    const now = audioContext.currentTime;
-    const duration = 0.12; // 120ms
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
 
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    const filter = audioContext.createBiquadFilter();
-
-    // Two-note ascending tone for success feedback
     oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(600, now);
-    oscillator.frequency.setValueAtTime(900, now + duration * 0.5);
+    oscillator.frequency.setValueAtTime(560, now);
+    oscillator.frequency.linearRampToValueAtTime(920, now + duration * 0.55);
+    oscillator.frequency.linearRampToValueAtTime(1160, now + duration);
 
-    filter.type = 'highpass';
-    filter.frequency.setValueAtTime(1500, now);
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.exponentialRampToValueAtTime(Math.max(volume, 0.001), now + 0.008);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-    gainNode.gain.setValueAtTime(0, now);
-    gainNode.gain.linearRampToValueAtTime(volume, now + 0.008);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration);
-
-    oscillator.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    oscillator.connect(gainNode);
+    gainNode.connect(ctx.destination);
 
     oscillator.start(now);
     oscillator.stop(now + duration);
-  } catch (error) {
-    console.error('Error playing success sound:', error);
-  }
+  });
 };

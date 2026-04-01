@@ -5,6 +5,8 @@ interface AppearancePreferences {
   fontFamily: 'inter' | 'poppins' | 'roboto'; // font options
 }
 
+type FontFamily = AppearancePreferences['fontFamily'];
+
 interface AppearanceContextType {
   preferences: AppearancePreferences;
   updateFontSize: (size: number) => void;
@@ -17,14 +19,50 @@ const DEFAULT_PREFERENCES: AppearancePreferences = {
   fontFamily: 'inter',
 };
 
+const MIN_FONT_SIZE = 12;
+const MAX_FONT_SIZE = 24;
+
+const FONT_STACKS: Record<FontFamily, string> = {
+  inter: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  poppins: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  roboto: "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+};
+
+const isValidFontFamily = (value: unknown): value is FontFamily => {
+  return value === 'inter' || value === 'poppins' || value === 'roboto';
+};
+
+const clampFontSize = (size: number): number => {
+  return Math.max(MIN_FONT_SIZE, Math.min(MAX_FONT_SIZE, size));
+};
+
+const normalizePreferences = (
+  raw: Partial<AppearancePreferences> | null | undefined,
+): AppearancePreferences => {
+  const fontSize = Number(raw?.fontSize);
+
+  return {
+    fontSize: Number.isFinite(fontSize)
+      ? clampFontSize(Math.round(fontSize))
+      : DEFAULT_PREFERENCES.fontSize,
+    fontFamily: isValidFontFamily(raw?.fontFamily)
+      ? raw.fontFamily
+      : DEFAULT_PREFERENCES.fontFamily,
+  };
+};
+
 const AppearanceContext = createContext<AppearanceContextType | undefined>(undefined);
 
 export const AppearanceProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [preferences, setPreferences] = useState<AppearancePreferences>(() => {
+    if (typeof window === 'undefined') {
+      return DEFAULT_PREFERENCES;
+    }
+
     const stored = localStorage.getItem('appearance-preferences');
     if (stored) {
       try {
-        return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
+        return normalizePreferences(JSON.parse(stored) as Partial<AppearancePreferences>);
       } catch {
         return DEFAULT_PREFERENCES;
       }
@@ -36,38 +74,60 @@ export const AppearanceProvider: React.FC<{ children: ReactNode }> = ({ children
   useEffect(() => {
     const root = document.documentElement;
     const fontStack = getSystemFontStack(preferences.fontFamily);
-    
-    // Set CSS variables
+
     root.style.setProperty('--base-font-size', `${preferences.fontSize}px`);
     root.style.setProperty('--font-family', fontStack);
-    
-    // Apply directly with !important to override any inline styles
-    root.style.setProperty('font-size', `${preferences.fontSize}px`, 'important');
-    root.style.setProperty('font-family', fontStack, 'important');
-    
-    document.body.style.setProperty('font-size', `${preferences.fontSize}px`, 'important');
-    document.body.style.setProperty('font-family', fontStack, 'important');
-    
-    // Apply to all common elements
-    const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, div, button, a, li, label');
-    elements.forEach((el) => {
-      (el as HTMLElement).style.setProperty('font-family', fontStack, 'important');
-    });
+    root.style.setProperty('--font-family-display', fontStack);
   }, [preferences]);
+
+  // Warm up selectable fonts early to avoid first-change flash/blink.
+  useEffect(() => {
+    if (typeof document === 'undefined' || !document.fonts) {
+      return;
+    }
+
+    void Promise.all([
+      document.fonts.load('400 1rem Inter'),
+      document.fonts.load('400 1rem Poppins'),
+      document.fonts.load('400 1rem Roboto'),
+    ]).catch(() => undefined);
+  }, []);
+
+  // Temporarily disable transitions while font size is actively changing.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.add('font-resizing');
+
+    const timeoutId = window.setTimeout(() => {
+      root.classList.remove('font-resizing');
+    }, 120);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      root.classList.remove('font-resizing');
+    };
+  }, [preferences.fontSize]);
 
   // Persist to localStorage
   useEffect(() => {
-    localStorage.setItem('appearance-preferences', JSON.stringify(preferences));
+    const timeoutId = window.setTimeout(() => {
+      localStorage.setItem('appearance-preferences', JSON.stringify(preferences));
+    }, 120);
+
+    return () => window.clearTimeout(timeoutId);
   }, [preferences]);
 
   const updateFontSize = (size: number) => {
-    // Clamp between 12px and 24px
-    const clampedSize = Math.max(12, Math.min(24, size));
-    setPreferences((prev) => ({ ...prev, fontSize: clampedSize }));
+    if (!Number.isFinite(size)) {
+      return;
+    }
+
+    const clampedSize = clampFontSize(Math.round(size));
+    setPreferences((prev) => (prev.fontSize === clampedSize ? prev : { ...prev, fontSize: clampedSize }));
   };
 
-  const updateFontFamily = (family: AppearancePreferences['fontFamily']) => {
-    setPreferences((prev) => ({ ...prev, fontFamily: family }));
+  const updateFontFamily = (family: FontFamily) => {
+    setPreferences((prev) => (prev.fontFamily === family ? prev : { ...prev, fontFamily: family }));
   };
 
   const resetToDefaults = () => {
@@ -90,10 +150,5 @@ export const useAppearance = (): AppearanceContextType => {
 };
 
 function getSystemFontStack(fontFamily: AppearancePreferences['fontFamily']): string {
-  const stacks: Record<AppearancePreferences['fontFamily'], string> = {
-    inter: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    poppins: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    roboto: "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  };
-  return stacks[fontFamily];
+  return FONT_STACKS[fontFamily];
 }

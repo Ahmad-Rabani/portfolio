@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['"DM Sans"', 'sans-serif'],
+        display: ['var(--font-family-display)', '"Playfair Display"', 'Georgia', 'serif'],
+        body: ['var(--font-family)', '"DM Sans"', 'sans-serif'],
       },
       colors: {
         cream: {

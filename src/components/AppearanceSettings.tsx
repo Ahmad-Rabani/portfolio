@@ -10,31 +10,78 @@ const FONT_FAMILIES = [
   { value: 'roboto' as const, label: 'Roboto' },
 ];
 
+const MIN_FONT_SIZE = 12;
+const MAX_FONT_SIZE = 24;
+const FONT_RANGE = MAX_FONT_SIZE - MIN_FONT_SIZE;
+
+const getFontPreviewStack = (fontFamily: typeof FONT_FAMILIES[0]['value']): string => {
+  if (fontFamily === 'poppins') return 'Poppins, sans-serif';
+  if (fontFamily === 'roboto') return 'Roboto, sans-serif';
+  return 'Inter, sans-serif';
+};
+
 export const AppearanceSettings: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [fontSizeDraft, setFontSizeDraft] = useState(MIN_FONT_SIZE);
+  const frameRef = useRef<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { preferences, updateFontSize, updateFontFamily, resetToDefaults } = useAppearance();
 
+  useEffect(() => {
+    setFontSizeDraft(preferences.fontSize);
+  }, [preferences.fontSize]);
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  const scheduleFontSizeUpdate = (value: number) => {
+    if (frameRef.current !== null) {
+      cancelAnimationFrame(frameRef.current);
+    }
+
+    frameRef.current = requestAnimationFrame(() => {
+      updateFontSize(value);
+      frameRef.current = null;
+    });
+  };
+
   // Close on outside click
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e: PointerEvent) => {
+      const target = e.target;
+      if (dropdownRef.current && target instanceof Node && !dropdownRef.current.contains(target)) {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener('pointerdown', handleClickOutside);
+      return () => document.removeEventListener('pointerdown', handleClickOutside);
     }
   }, [isOpen]);
 
   const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-    if (value >= 12 && value <= 24) {
-      updateFontSize(value);
+    if (Number.isFinite(value) && value >= MIN_FONT_SIZE && value <= MAX_FONT_SIZE) {
+      setFontSizeDraft(value);
+      scheduleFontSizeUpdate(value);
     }
   };
+
+  const handleFontSizeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (Number.isFinite(value)) {
+      setFontSizeDraft(value);
+      scheduleFontSizeUpdate(value);
+    }
+  };
+
+  const sliderProgress = ((fontSizeDraft - MIN_FONT_SIZE) / FONT_RANGE) * 100;
 
   const handleFontFamilyChange = (family: typeof FONT_FAMILIES[0]['value']) => {
     playClickSound();
@@ -69,7 +116,7 @@ export const AppearanceSettings: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute right-0 mt-2 w-72 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-4 z-50"
+            className="absolute right-0 mt-2 w-[min(18rem,calc(100vw-1rem))] max-h-[75vh] overflow-y-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-lg p-4 z-50"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
@@ -97,13 +144,13 @@ export const AppearanceSettings: React.FC = () => {
               {/* Slider */}
               <input
                 type="range"
-                min="12"
-                max="24"
-                value={preferences.fontSize}
+                min={MIN_FONT_SIZE}
+                max={MAX_FONT_SIZE}
+                value={fontSizeDraft}
                 onChange={handleFontSizeChange}
-                className="w-full h-2 rounded-lg appearance-none cursor-pointer slider will-change-auto transition-all"
+                className="w-full h-2 rounded-lg appearance-none cursor-pointer slider will-change-auto"
                 style={{
-                  background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${((preferences.fontSize - 12) / 12) * 100}%, var(--color-border) ${((preferences.fontSize - 12) / 12) * 100}%, var(--color-border) 100%)`,
+                  background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${sliderProgress}%, var(--color-border) ${sliderProgress}%, var(--color-border) 100%)`,
                 }}
               />
 
@@ -111,10 +158,12 @@ export const AppearanceSettings: React.FC = () => {
               <div className="flex gap-2">
                 <input
                   type="number"
-                  min="12"
-                  max="24"
-                  value={preferences.fontSize}
-                  onChange={(e) => updateFontSize(Number(e.target.value))}
+                  min={MIN_FONT_SIZE}
+                  max={MAX_FONT_SIZE}
+                  step="1"
+                  inputMode="numeric"
+                  value={fontSizeDraft}
+                  onChange={handleFontSizeInput}
                   className="flex-1 px-3 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/50"
                 />
                 <span className="px-3 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-muted)]">
@@ -160,7 +209,7 @@ export const AppearanceSettings: React.FC = () => {
                         : 'bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
                     }`}
                     style={{
-                      fontFamily: value === 'inter' ? 'Inter' : value === 'poppins' ? 'Poppins' : 'Roboto',
+                      fontFamily: getFontPreviewStack(value),
                     }}
                   >
                     {label}
@@ -172,7 +221,7 @@ export const AppearanceSettings: React.FC = () => {
               <div
                 className="p-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-xs text-[var(--color-text-muted)]"
                 style={{
-                  fontFamily: preferences.fontFamily === 'inter' ? 'Inter' : preferences.fontFamily === 'poppins' ? 'Poppins' : 'Roboto',
+                  fontFamily: getFontPreviewStack(preferences.fontFamily),
                 }}
               >
                 The quick brown fox jumps over the lazy dog
