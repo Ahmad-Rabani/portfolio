@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { getSafeStorage, BrowserFeatures } from '../utils/browserCompat';
 
 interface AppearancePreferences {
   fontSize: number; // in pixels, default 16
@@ -59,13 +60,14 @@ export const AppearanceProvider: React.FC<{ children: ReactNode }> = ({ children
       return DEFAULT_PREFERENCES;
     }
 
-    const stored = localStorage.getItem('appearance-preferences');
-    if (stored) {
-      try {
+    try {
+      const storage = getSafeStorage();
+      const stored = storage.getItem('appearance-preferences');
+      if (stored) {
         return normalizePreferences(JSON.parse(stored) as Partial<AppearancePreferences>);
-      } catch {
-        return DEFAULT_PREFERENCES;
       }
+    } catch {
+      // Storage or parse error, use defaults
     }
     return DEFAULT_PREFERENCES;
   });
@@ -82,15 +84,19 @@ export const AppearanceProvider: React.FC<{ children: ReactNode }> = ({ children
 
   // Warm up selectable fonts early to avoid first-change flash/blink.
   useEffect(() => {
-    if (typeof document === 'undefined' || !document.fonts) {
+    if (!BrowserFeatures.hasFontLoading()) {
       return;
     }
 
-    void Promise.all([
-      document.fonts.load('400 1rem Inter'),
-      document.fonts.load('400 1rem Poppins'),
-      document.fonts.load('400 1rem Roboto'),
-    ]).catch(() => undefined);
+    try {
+      void Promise.all([
+        document.fonts.load('400 1rem Inter'),
+        document.fonts.load('400 1rem Poppins'),
+        document.fonts.load('400 1rem Roboto'),
+      ]).catch(() => undefined);
+    } catch {
+      // Font loading API not available or failed, silently continue
+    }
   }, []);
 
   // Temporarily disable transitions while font size is actively changing.
@@ -111,7 +117,12 @@ export const AppearanceProvider: React.FC<{ children: ReactNode }> = ({ children
   // Persist to localStorage
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      localStorage.setItem('appearance-preferences', JSON.stringify(preferences));
+      try {
+        const storage = getSafeStorage();
+        storage.setItem('appearance-preferences', JSON.stringify(preferences));
+      } catch {
+        // Storage may be unavailable or disabled, silently continue
+      }
     }, 120);
 
     return () => window.clearTimeout(timeoutId);

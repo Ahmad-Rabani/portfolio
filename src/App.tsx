@@ -11,8 +11,14 @@ import { Skills } from './sections/Skills';
 import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
 import { primeClickSound } from './utils/sounds';
+import { initBrowserCompat } from './utils/browserCompat';
 
 function App() {
+  useEffect(() => {
+    // Initialize browser compatibility polyfills
+    initBrowserCompat();
+  }, []);
+
   useEffect(() => {
     const unlockAudio = () => {
       primeClickSound();

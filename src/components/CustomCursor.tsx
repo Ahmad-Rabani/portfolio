@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { BrowserFeatures } from '../utils/browserCompat';
 
 const CURSOR_SIZE = 20;
 
@@ -14,8 +15,7 @@ export const CustomCursor: React.FC = () => {
     const isTouchDevice = () => {
       return (
         (typeof window !== 'undefined' &&
-          ('ontouchstart' in window ||
-            (navigator.maxTouchPoints || 0) > 0))
+          ('ontouchstart' in window || BrowserFeatures.hasTouchEvents()))
       );
     };
 
