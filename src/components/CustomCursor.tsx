@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const CURSOR_SIZE = 20;
-const CURSOR_BORDER_SIZE = 2;
 
 export const CustomCursor: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isPointer, setIsPointer] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -17,8 +15,7 @@ export const CustomCursor: React.FC = () => {
       return (
         (typeof window !== 'undefined' &&
           ('ontouchstart' in window ||
-            (navigator.maxTouchPoints || 0) > 0)) ||
-        (navigator.msMaxTouchPoints || 0) > 0
+            (navigator.maxTouchPoints || 0) > 0))
       );
     };
 
@@ -42,33 +39,32 @@ export const CustomCursor: React.FC = () => {
       setIsVisible(false);
     };
 
-    const handlePointerEnter = (e: PointerEvent) => {
-      const target = e.target as HTMLElement;
+    const handlePointerEnter = (e: Event) => {
+      const target = (e as PointerEvent).target;
+      if (!(target instanceof HTMLElement)) {
+        setIsHovering(false);
+        return;
+      }
+
       const isClickable =
         target.tagName === 'BUTTON' ||
         target.tagName === 'A' ||
-        target.onclick ||
+        target.closest('button, a, [role="button"], .cursor-pointer') !== null ||
+        Boolean(target.onclick) ||
         target.classList.contains('cursor-pointer') ||
         window.getComputedStyle(target).cursor === 'pointer';
 
-      setIsPointer(isClickable);
       setIsHovering(isClickable);
     };
 
     const handlePointerLeave = () => {
-      setIsPointer(false);
       setIsHovering(false);
-    };
-
-    // Update cursor type for interactive elements
-    const handlePointerOver = (e: PointerEvent) => {
-      handlePointerEnter(e);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseenter', handleMouseEnter, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    document.addEventListener('pointerover', handlePointerOver, { passive: true });
+    document.addEventListener('pointerover', handlePointerEnter, { passive: true });
     document.addEventListener('pointerenter', handlePointerEnter, { passive: true });
     document.addEventListener('pointerleave', handlePointerLeave, { passive: true });
 
@@ -76,7 +72,7 @@ export const CustomCursor: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseenter', handleMouseEnter);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('pointerover', handlePointerOver);
+      document.removeEventListener('pointerover', handlePointerEnter);
       document.removeEventListener('pointerenter', handlePointerEnter);
       document.removeEventListener('pointerleave', handlePointerLeave);
       document.documentElement.style.cursor = 'auto';

@@ -8,12 +8,11 @@ import {
   RiCodeSSlashLine,
   RiLayout2Line,
   RiSmartphoneLine,
-  RiContrastLine,
   RiAppsLine,
   RiTerminalBoxLine,
   RiGlobalLine,
 } from 'react-icons/ri';
-import { SiTypescript, SiTailwindcss, SiVite, SiNextdotjs, SiFigma, SiAntdesign, SiMui, SiStyledcomponents, SiBitbucket } from 'react-icons/si';
+import { SiTypescript, SiTailwindcss, SiVite, SiNextdotjs, SiAntdesign, SiMui, SiStyledcomponents, SiBitbucket } from 'react-icons/si';
 
 interface SkillItem {
   name: string;
