@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { RiExternalLinkLine, RiGithubLine, RiArrowRightLine } from 'react-icons/ri';
 import type { Project } from '../types';
+import { OptimizedBackgroundImage } from './OptimizedBackgroundImage';
 
 interface ProjectCardProps {
   project: Project;
@@ -17,11 +18,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       className="group card-base overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300"
     >
       {/* Image */}
-      <div className="relative overflow-hidden h-48 bg-[var(--color-surface)]">
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url(${project.image})` }}
-        />
+      <OptimizedBackgroundImage
+        src={project.image}
+        className="relative overflow-hidden h-48 bg-[var(--color-surface)] bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+      >
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -57,7 +57,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             </a>
           )}
         </div>
-      </div>
+      </OptimizedBackgroundImage>
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-6">

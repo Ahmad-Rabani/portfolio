@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { RiArrowDownLine, RiDownload2Line } from 'react-icons/ri';
 import { scrollToSection } from '../utils/scrollTo';
 import { playClickSound } from '../utils/sounds';
+import { OptimizedImage } from '../components/OptimizedImage';
 
 const fadeUp = (delay: number = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -119,11 +120,11 @@ export const Hero: React.FC = () => {
 
               {/* Avatar container */}
               <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--color-bg)] shadow-2xl">
-                <img
+                <OptimizedImage
                   src="/Hero/hero.png"
                   alt="Hero Portrait"
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: '85% 50%' }}
+                  priority={true}
                 />
               </div>
 
