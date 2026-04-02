@@ -33,14 +33,10 @@ export const OptimizedBackgroundImage: React.FC<OptimizedBackgroundImageProps> =
             const img = new Image();
             img.onload = () => setIsLoaded(true);
             img.onerror = () => {
-              // Fallback to original if WebP fails
-              setBgImage(src);
+              console.warn(`Failed to load image: ${src}`);
               setIsLoaded(true);
             };
-            
-            // Try WebP first
-            const webpSrc = src.replace(/\.png$/i, '.webp');
-            img.src = webpSrc;
+            img.src = src;
             
             observer.unobserve(entry.target);
           }
@@ -56,14 +52,14 @@ export const OptimizedBackgroundImage: React.FC<OptimizedBackgroundImageProps> =
     return () => observer.disconnect();
   }, [src, priority]);
 
-  const webpSrc = bgImage.replace(/\.png$/i, '.webp');
-
   return (
     <div
       ref={containerRef}
       className={`${className} ${isLoaded ? 'bg-loaded' : 'bg-placeholder'}`}
       style={{
-        backgroundImage: bgImage ? `url('${webpSrc}'), url('${bgImage}')` : undefined,
+        backgroundImage: bgImage ? `url('${bgImage}')` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         opacity: isLoaded ? 1 : 0.8,
         transition: 'opacity 0.3s ease-in',
       }}

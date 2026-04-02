@@ -13,22 +13,25 @@ interface OptimizedImageProps {
 
 /**
  * Optimized image component with lazy loading and modern format support
- * Automatically uses WebP with PNG fallback
  */
 export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
   className = '',
-  containerClassName = '',
   priority = false,
   blur = true,
+  width,
+  height,
 }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(priority);
   const [imageSrc, setImageSrc] = useState(priority ? src : '');
 
   useEffect(() => {
-    if (priority) return;
+    if (priority) {
+      setImageSrc(src);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -49,27 +52,22 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     return () => observer.disconnect();
   }, [src, priority]);
 
-  // Convert PNG to WebP path automatically
-  const webpSrc = imageSrc.replace(/\.png$/i, '.webp');
-
   return (
-    <picture>
-      {imageSrc && (
-        <>
-          <source srcSet={webpSrc} type="image/webp" />
-          <source srcSet={imageSrc} type="image/png" />
-        </>
-      )}
-      <img
-        ref={imgRef}
-        src={imageSrc || (blur ? 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"%3E%3Crect fill="%23f0f0f0" width="10" height="10"/%3E%3C/svg%3E' : '')}
-        alt={alt}
-        className={`${className} ${isLoaded ? 'fade-in' : blur ? 'blur-sm' : ''}`}
-        onLoad={() => setIsLoaded(true)}
-        loading="lazy"
-        decoding="async"
-      />
-    </picture>
+    <img
+      ref={imgRef}
+      src={imageSrc || (blur ? 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"%3E%3Crect fill="%23f0f0f0" width="10" height="10"/%3E%3C/svg%3E' : '')}
+      alt={alt}
+      className={`${className} ${isLoaded ? 'fade-in' : blur ? 'blur-sm' : ''}`}
+      onLoad={() => setIsLoaded(true)}
+      onError={() => {
+        console.warn(`Failed to load image: ${imageSrc}`);
+        setIsLoaded(true);
+      }}
+      loading="lazy"
+      decoding="async"
+      width={width}
+      height={height}
+    />
   );
 };
 
