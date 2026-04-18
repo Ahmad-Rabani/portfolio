@@ -142,7 +142,7 @@ export const AppearanceSettings: React.FC = () => {
               </label>
 
               {/* Slider */}
-              <input
+              {/* <input
                 type="range"
                 min={MIN_FONT_SIZE}
                 max={MAX_FONT_SIZE}
@@ -152,10 +152,10 @@ export const AppearanceSettings: React.FC = () => {
                 style={{
                   background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${sliderProgress}%, var(--color-border) ${sliderProgress}%, var(--color-border) 100%)`,
                 }}
-              />
+              /> */}
 
               {/* Input Field */}
-              <div className="flex gap-2">
+              {/* <div className="flex gap-2">
                 <input
                   type="number"
                   min={MIN_FONT_SIZE}
@@ -169,7 +169,7 @@ export const AppearanceSettings: React.FC = () => {
                 <span className="px-3 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-muted)]">
                   px
                 </span>
-              </div>
+              </div> */}
 
               {/* Presets */}
               <div className="flex gap-2">
