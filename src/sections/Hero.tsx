@@ -125,6 +125,7 @@ export const Hero: React.FC = () => {
                   alt="Hero Portrait"
                   className="w-full h-full object-cover"
                   priority={true}
+                  objectPosition="80% center"
                 />
               </div>
 

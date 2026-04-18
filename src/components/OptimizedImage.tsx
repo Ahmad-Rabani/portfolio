@@ -9,6 +9,7 @@ interface OptimizedImageProps {
   height?: number;
   priority?: boolean; // Skip lazy loading for critical images
   blur?: boolean; // Show blur placeholder
+  objectPosition?: string; // Position of the image within its container
 }
 
 /**
@@ -22,6 +23,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   blur = true,
   width,
   height,
+   objectPosition = 'center',
 }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(priority);
@@ -54,6 +56,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   return (
     <img
+    style={{ objectPosition }}
       ref={imgRef}
       src={imageSrc || (blur ? 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"%3E%3Crect fill="%23f0f0f0" width="10" height="10"/%3E%3C/svg%3E' : '')}
       alt={alt}
