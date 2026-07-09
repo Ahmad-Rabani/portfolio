@@ -11,8 +11,27 @@ import {
   RiAppsLine,
   RiTerminalBoxLine,
   RiGlobalLine,
+  RiBarcodeLine,
+  RiScanLine,
+  RiBrushLine,
+  RiShapeLine,
 } from 'react-icons/ri';
-import { SiTypescript, SiTailwindcss, SiVite, SiNextdotjs, SiAntdesign, SiMui, SiStyledcomponents, SiBitbucket } from 'react-icons/si';
+import {
+  SiTypescript,
+  SiTailwindcss,
+  SiVite,
+  SiNextdotjs,
+  SiAntdesign,
+  SiMui,
+  SiStyledcomponents,
+  SiBitbucket,
+  SiShadcnui,
+  SiReactquery,
+  SiSocketdotio,
+  SiLeaflet,
+  SiMapbox,
+  SiStrapi,
+} from 'react-icons/si';
 
 interface SkillItem {
   name: string;
@@ -49,6 +68,7 @@ const SKILL_GROUPS: SkillGroup[] = [
       { name: 'Styled Components', icon: <SiStyledcomponents size={18} />, level: 4 },
       { name: 'Redux', icon: <RiCodeSSlashLine size={22} />, level: 4 },
       { name: 'Context API', icon: <RiAppsLine size={22} />, level: 5 },
+      { name: 'React Query', icon: <SiReactquery size={18} />, level: 4 },
     ],
   },
   {
@@ -57,6 +77,15 @@ const SKILL_GROUPS: SkillGroup[] = [
     skills: [
       { name: 'Ant Design', icon: <SiAntdesign size={18} />, level: 5 },
       { name: 'Material-UI (MUI)', icon: <SiMui size={18} />, level: 4 },
+      { name: 'Shadcn UI', icon: <SiShadcnui size={18} />, level: 4 },
+    ],
+  },
+  {
+    category: 'Maps & Tracking',
+    description: 'Real-time location features and interactive mapping',
+    skills: [
+      { name: 'React Leaflet', icon: <SiLeaflet size={18} />, level: 4 },
+      { name: 'Mapbox GL JS', icon: <SiMapbox size={18} />, level: 3 },
     ],
   },
   {
@@ -65,9 +94,21 @@ const SKILL_GROUPS: SkillGroup[] = [
     skills: [
       { name: 'Git & GitHub', icon: <RiGitBranchLine size={22} />, level: 5 },
       { name: 'REST APIs', icon: <RiGlobalLine size={22} />, level: 5 },
+      { name: 'Socket.io', icon: <SiSocketdotio size={18} />, level: 3 },
       { name: 'Bitbucket', icon: <SiBitbucket size={18} />, level: 3 },
       { name: 'Azure', icon: <RiTerminalBoxLine size={22} />, level: 3 },
       { name: 'Firebase', icon: <RiSmartphoneLine size={22} />, level: 3 },
+      { name: 'Strapi CMS', icon: <SiStrapi size={18} />, level: 3 },
+    ],
+  },
+  {
+    category: 'Specialized Integrations',
+    description: 'Barcode scanning, OCR, and rich media rendering',
+    skills: [
+      { name: 'ZXing Scanner', icon: <RiBarcodeLine size={22} />, level: 4 },
+      { name: 'Tesseract.js', icon: <RiScanLine size={22} />, level: 4 },
+      { name: 'Canvas API', icon: <RiBrushLine size={22} />, level: 4 },
+      { name: 'SVG Animation', icon: <RiShapeLine size={22} />, level: 4 },
     ],
   },
 ];

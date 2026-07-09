@@ -3,6 +3,7 @@ import { RiArrowDownLine, RiDownload2Line } from 'react-icons/ri';
 import { scrollToSection } from '../utils/scrollTo';
 import { playClickSound } from '../utils/sounds';
 import { OptimizedImage } from '../components/OptimizedImage';
+import { CV_DOWNLOAD_PATH } from '../constants/cv';
 
 const fadeUp = (delay: number = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -77,7 +78,7 @@ export const Hero: React.FC = () => {
                 Contact Me
               </button>
               <a
-                href="/cv/Ahmad Ali Rabani (1) 1 (1).pdf"
+                href={CV_DOWNLOAD_PATH}
                 download
                 onClick={() => playClickSound()}
                 className="inline-flex items-center gap-2 text-sm font-body font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors py-3 px-2"

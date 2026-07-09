@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { RiMapPinLine, RiCalendarLine, RiCheckDoubleLine, RiDownload2Line } from 'react-icons/ri';
 import type { Experience as ExperienceItem } from '../types';
+import { CV_DOWNLOAD_PATH } from '../constants/cv';
 
 const EXPERIENCES: ExperienceItem[] = [
   {
@@ -208,7 +209,7 @@ export const Experience: React.FC = () => {
           </div>
 
           <a
-            href="/cv/Ahmad Ali Rabani (1) 1 (1).pdf"
+            href={CV_DOWNLOAD_PATH}
             download
             className="inline-flex items-center gap-2 text-sm font-body font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors py-3 px-2 mt-6"
           >
