@@ -9,7 +9,7 @@ interface CardData extends SummaryCard {
 
 const CARDS: CardData[] = [
   {
-    value: '2+',
+    value: '3+',
     label: 'Years of Experience',
     description: 'Building production-grade web apps across startups and agencies',
     icon: <RiBriefcaseLine size={24} />,
