@@ -137,7 +137,7 @@ export const Hero: React.FC = () => {
                 transition={{ delay: 0.8, duration: 0.5 }}
                 className="absolute -right-4 top-8 card-base px-4 py-2.5 shadow-lg"
               >
-                <div className="text-xl font-display font-bold text-[var(--color-text)]">2+</div>
+                <div className="text-xl font-display font-bold text-[var(--color-text)]">3+</div>
                 <div className="text-xs font-body text-[var(--color-text-muted)]">Years Exp.</div>
               </motion.div>
 

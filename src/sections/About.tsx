@@ -46,7 +46,7 @@ export const About: React.FC = () => {
                   {/* Stats row */}
                   <div className="grid grid-cols-3 gap-3 mt-4">
                     {[
-                      { val: '2+', label: 'Years' },
+                      { val: '3+', label: 'Years' },
                       { val: '15+', label: 'Projects' },
                       { val: '8+', label: 'Clients' },
                     ].map(({ val, label }) => (
