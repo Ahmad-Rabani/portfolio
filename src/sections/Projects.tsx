@@ -146,7 +146,7 @@ const PROJECTS: Project[] = [
     impact: 'Improved productivity with easy-to-use note management and task tracking capabilities.',
     tech: ['React', 'JavaScript', 'Local Storage'],
     image: '/project%20images/notes-app.png',
-    liveUrl: 'https://todo-react-nine-woad.vercel.app/home',
+    liveUrl: 'https://todo-react-nine-woad.vercel.app/',
     githubUrl: 'https://github.com/Ahmad-Rabani/Notes-React',
     featured: false,
   },
