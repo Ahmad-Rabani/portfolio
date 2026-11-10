@@ -88,6 +88,32 @@ const PROJECTS: Project[] = [
     featured: false,
   },
   {
+    id: 11,
+    title: 'Dental Stripe Platform',
+    description: 'A Next.js dental systems storefront with Strapi CMS — product catalog, categories, journal, testimonials, and contact flows for precision dental equipment.',
+    problem: 'Dental equipment brands needed a modern product site with editable CMS content instead of a static brochure.',
+    impact: 'Delivered a CMS-driven catalog experience with preview fallbacks, SEO pages, and a clean path for client-editable content.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Strapi'],
+    image: '/project%20images/dental-stripe.jpg',
+    liveUrl: 'https://dentel-stripe.vercel.app',
+    githubUrl: 'https://github.com/Ahmad-Rabani/dentel-stripe',
+    featured: true,
+    category: 'Dental',
+  },
+  {
+    id: 12,
+    title: 'Dental Clinic Website',
+    description: 'An interactive dental clinic site with treatment pricing, insurance estimate tools, doctor profiles, smile quiz, and appointment-focused CTAs.',
+    problem: 'Dental clinics needed a conversion-focused site that helps patients explore treatments and estimate costs before booking.',
+    impact: 'Built a high-engagement clinic experience with transparent pricing and guided patient journeys.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    image: '/project%20images/dental-clinic.jpg',
+    liveUrl: '#',
+    githubUrl: 'https://github.com/Ahmad-Rabani/gemini-dentel-site',
+    featured: true,
+    category: 'Dental',
+  },
+  {
     id: 5,
     title: 'Dental Website Landing Page',
     description: 'A professional landing page for a dental practice featuring services, doctor profiles, appointment booking, and patient testimonials.',
@@ -98,6 +124,7 @@ const PROJECTS: Project[] = [
     liveUrl: 'https://doctors-landing-page-qsa7.vercel.app/',
     githubUrl: 'https://github.com/Ahmad-Rabani/Doctors-landing-page',
     featured: false,
+    category: 'Dental',
   },
   {
     id: 6,
@@ -125,7 +152,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-const FILTERS = ['All', 'Featured', 'Garage', 'React', 'Ant Design', 'Tailwind CSS'] as const;
+const FILTERS = ['All', 'Featured', 'Garage', 'Dental', 'React', 'Ant Design', 'Tailwind CSS'] as const;
 type Filter = (typeof FILTERS)[number];
 
 export const Projects: React.FC = () => {
@@ -134,7 +161,7 @@ export const Projects: React.FC = () => {
   const filtered = PROJECTS.filter((p) => {
     if (active === 'All') return true;
     if (active === 'Featured') return p.featured;
-    if (active === 'Garage') return p.category === 'Garage';
+    if (active === 'Garage' || active === 'Dental') return p.category === active;
     return p.tech.some((t) => t === active);
   });
 
