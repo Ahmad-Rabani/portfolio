@@ -6,15 +6,15 @@ import type { Project } from '../types';
 const PROJECTS: Project[] = [
   {
     id: 1,
-    title: 'Sianty — Garage Management System',
+    title: 'Garage Management System',
     description: 'A comprehensive multi-module web application designed to streamline garage operations from vehicle intake and inspections through job management, invoicing, and customer communication.',
     problem: 'Garage operations were fragmented across multiple disconnected systems, leading to inefficiencies in job tracking and customer management.',
     impact: 'Streamlined garage workflows, improved job tracking accuracy, and enhanced customer communication capabilities.',
     tech: ['React', 'TypeScript', 'Ant Design'],
-    image: '/project%20images/sianty.png',
+    image: '/project%20images/garage.png',
     liveUrl: 'http://dev1.sianty.com/#/login',
     featured: true,
-    category: 'Sianty',
+    category: 'Garage',
   },
   {
     id: 8,
@@ -26,7 +26,7 @@ const PROJECTS: Project[] = [
     image: '/project%20images/CMS.png',
     liveUrl: 'http://dev2.sianty.com',
     featured: true,
-    category: 'Sianty',
+    category: 'Garage',
   },
   {
     id: 9,
@@ -38,7 +38,19 @@ const PROJECTS: Project[] = [
     image: '/project%20images/Customer.png',
     liveUrl: 'http://158.180.46.230:3006/login',
     featured: true,
-    category: 'Sianty',
+    category: 'Garage',
+  },
+  {
+    id: 10,
+    title: 'Bakery Management System',
+    description: 'A custom bakery commerce platform with a Next.js storefront, admin CMS, and Express API covering catalog, checkout, payments, delivery capacity, and EN/AR i18n.',
+    problem: 'Bakery operations needed a tailored platform for custom orders, delivery capacity, and bilingual shopping without third-party commerce limitations.',
+    impact: 'Delivered a full storefront, admin CMS, and API stack for catalog, cart, payments, and operations in one owned platform.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Express'],
+    image: '/project%20images/bakery.jpg',
+    liveUrl: '#',
+    githubUrl: 'https://github.com/Ahmad-Rabani/Bakery',
+    featured: true,
   },
   {
     id: 2,
@@ -113,7 +125,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-const FILTERS = ['All', 'Featured', 'Sianty', 'React', 'Ant Design', 'Tailwind CSS'] as const;
+const FILTERS = ['All', 'Featured', 'Garage', 'React', 'Ant Design', 'Tailwind CSS'] as const;
 type Filter = (typeof FILTERS)[number];
 
 export const Projects: React.FC = () => {
@@ -122,7 +134,7 @@ export const Projects: React.FC = () => {
   const filtered = PROJECTS.filter((p) => {
     if (active === 'All') return true;
     if (active === 'Featured') return p.featured;
-    if (active === 'Sianty') return p.category === 'Sianty';
+    if (active === 'Garage') return p.category === 'Garage';
     return p.tech.some((t) => t === active);
   });
 
