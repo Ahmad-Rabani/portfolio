@@ -122,11 +122,11 @@ export const Hero: React.FC = () => {
               {/* Avatar container */}
               <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--color-bg)] shadow-2xl">
                 <OptimizedImage
-                  src="/Hero/hero.png"
+                  src="/Hero/hero.jpg"
                   alt="Hero Portrait"
                   className="w-full h-full object-cover"
                   priority={true}
-                  objectPosition="80% center"
+                  objectPosition="center 40%"
                 />
               </div>
 
